@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfd3gursvfr1p"]
+
+[ext_resource type="Texture2D" uid="uid://dolr35h73l0lr" path="res://assets/Bone_Meal.webp" id="1_1m1wk"]
+[ext_resource type="Script" uid="uid://cmhw20u1ckx07" path="res://script/player.gd" id="1_w152q"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_w152q"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w152q"]
+radius = 41.0
+height = 116.0
+
+[node name="Player" type="StaticBody2D"]
+position = Vector2(403.145, 1024)
+physics_material_override = SubResource("PhysicsMaterial_w152q")
+script = ExtResource("1_w152q")
+player = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.338889, 0.393056)
+texture = ExtResource("1_1m1wk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_w152q")

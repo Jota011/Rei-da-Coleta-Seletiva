@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb43s1b0app5p"]
+
+[ext_resource type="Script" uid="uid://u5jjt703ek4j" path="res://cenas/mapa/campo_principal.gd" id="1_lkxhd"]
+[ext_resource type="Texture2D" uid="uid://cwyq6d8mc3tdj" path="res://assets/campo_fundo.jpg" id="2_77p3k"]
+[ext_resource type="PackedScene" uid="uid://dfd3gursvfr1p" path="res://cenas/player/player.tscn" id="3_i22av"]
+
+[node name="campo_principal" type="Node2D"]
+script = ExtResource("1_lkxhd")
+
+[node name="Skin_Campo" type="Sprite2D" parent="."]
+position = Vector2(402, 613)
+texture = ExtResource("2_77p3k")
+
+[node name="Player" parent="." instance=ExtResource("3_i22av")]
