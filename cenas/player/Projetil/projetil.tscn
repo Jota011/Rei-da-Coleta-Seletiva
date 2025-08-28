@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://m764j1pisivg"]
+
+[ext_resource type="Script" uid="uid://bwco2uq6ndohn" path="res://script/projetil.gd" id="1_8d8s5"]
+[ext_resource type="Texture2D" uid="uid://dolr35h73l0lr" path="res://assets/Bone_Meal.webp" id="2_34jdj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_34jdj"]
+size = Vector2(10, 10)
+
+[node name="Projetil" type="Area2D"]
+script = ExtResource("1_8d8s5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2.38419e-07, 0)
+scale = Vector2(0.0430554, 0.0413889)
+texture = ExtResource("2_34jdj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_34jdj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

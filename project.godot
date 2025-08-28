@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="Recicle"
-run/main_scene="uid://dfd3gursvfr1p"
+run/main_scene="uid://bb43s1b0app5p"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=810
-window/size/viewport_height=1220
+window/size/viewport_width=600
+window/size/viewport_height=1000
 window/stretch/mode="canvas_items"
 
 [input]
