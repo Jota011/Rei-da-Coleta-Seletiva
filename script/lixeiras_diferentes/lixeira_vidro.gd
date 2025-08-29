@@ -11,9 +11,9 @@ func _on_area_entered(area: Area2D):
 		var tipo_lixo = area.get_trash_type()
 
 		if tipo_lixo == bin_type:
-			print("✅ Acertou! Jogou", tipo_lixo, "na lixeira de", bin_type)
+			print("✅ Acertou! Jogou ", tipo_lixo, " na lixeira de", bin_type)
 			area.queue_free()  # lixo some
 			# aqui soma pontos
 		else:
-			print("❌ Errou! Jogou", tipo_lixo, "na lixeira de", bin_type)
+			print("❌ Errou! Jogou ", tipo_lixo, " na lixeira de", bin_type)
 			area.queue_free()  # lixo também some (ou não, depende da regra)

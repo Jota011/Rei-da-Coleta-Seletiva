@@ -1,54 +1,89 @@
-[gd_scene load_steps=9 format=3 uid="uid://m764j1pisivg"]
+[gd_scene load_steps=17 format=3 uid="uid://m764j1pisivg"]
 
 [ext_resource type="Script" uid="uid://bwco2uq6ndohn" path="res://script/projetil.gd" id="1_8d8s5"]
-[ext_resource type="Texture2D" uid="uid://dolr35h73l0lr" path="res://assets/Bone_Meal.webp" id="2_34jdj"]
 [ext_resource type="Script" uid="uid://b4joxuqyao2ma" path="res://script/tipos_projeteis/papel.gd" id="2_x0fd1"]
+[ext_resource type="Texture2D" uid="uid://ea6q1uuyax55" path="res://assets/papel_p.png" id="3_c5hs3"]
 [ext_resource type="Script" uid="uid://cvo25dls7dfv5" path="res://script/tipos_projeteis/plastico.gd" id="3_pj100"]
 [ext_resource type="Script" uid="uid://lr2e2sxukumi" path="res://script/tipos_projeteis/organico.gd" id="5_23ceo"]
+[ext_resource type="Texture2D" uid="uid://ccvfiiuc4yo18" path="res://assets/plastico_p.png" id="5_e1xnh"]
 [ext_resource type="Script" uid="uid://dpc3hq6jgpjfv" path="res://script/tipos_projeteis/vidro.gd" id="6_y03ld"]
 [ext_resource type="Script" uid="uid://dt8ekpqxgjgql" path="res://script/tipos_projeteis/metal.gd" id="7_c5hs3"]
+[ext_resource type="Texture2D" uid="uid://l3lipurtx14k" path="res://assets/organico_p.png" id="7_plduy"]
+[ext_resource type="Texture2D" uid="uid://yr2utpjhwmdr" path="res://assets/vidro_p.png" id="9_xqc1x"]
+[ext_resource type="Texture2D" uid="uid://du6nfec3teqnt" path="res://assets/metal_p.png" id="11_1ik10"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c5hs3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_34jdj"]
 size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e1xnh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plduy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqc1x"]
 
 [node name="Projetil" type="Node2D"]
 script = ExtResource("1_8d8s5")
 
 [node name="Papel" type="Area2D" parent="." groups=["trash_type"]]
+position = Vector2(47, 0)
+scale = Vector2(0.005, 0.005)
 script = ExtResource("2_x0fd1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Papel" groups=["trash_type"]]
+scale = Vector2(103, 103)
+shape = SubResource("RectangleShape2D_c5hs3")
 
 [node name="Sprite2D" type="Sprite2D" parent="Papel" groups=["trash_type"]]
+texture = ExtResource("3_c5hs3")
 
 [node name="Plastico" type="Area2D" parent="." groups=["trash_type"]]
+position = Vector2(59, 1)
+scale = Vector2(0.009, 0.009)
 script = ExtResource("3_pj100")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plastico"]
+scale = Vector2(95, 95)
 shape = SubResource("RectangleShape2D_34jdj")
 
 [node name="Sprite2D" type="Sprite2D" parent="Plastico"]
 position = Vector2(-2.38419e-07, 0)
-scale = Vector2(0.0430554, 0.0413889)
-texture = ExtResource("2_34jdj")
+scale = Vector2(1.005, 0.958)
+texture = ExtResource("5_e1xnh")
 
 [node name="Organico" type="Area2D" parent="." groups=["trash_type"]]
+position = Vector2(70, 1)
+scale = Vector2(0.008, 0.008)
 script = ExtResource("5_23ceo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Organico"]
+scale = Vector2(52, 52)
+shape = SubResource("RectangleShape2D_e1xnh")
 
 [node name="Sprite2D" type="Sprite2D" parent="Organico"]
+texture = ExtResource("7_plduy")
 
 [node name="Vidro" type="Area2D" parent="." groups=["trash_type"]]
+position = Vector2(35, 0)
+scale = Vector2(0.009, 0.009)
 script = ExtResource("6_y03ld")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vidro"]
+scale = Vector2(52, 52)
+shape = SubResource("RectangleShape2D_plduy")
 
 [node name="Sprite2D" type="Sprite2D" parent="Vidro"]
+texture = ExtResource("9_xqc1x")
 
 [node name="Metal" type="Area2D" parent="." groups=["trash_type"]]
+position = Vector2(24, 0)
+scale = Vector2(0.009, 0.009)
 script = ExtResource("7_c5hs3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Metal"]
+scale = Vector2(50, 50)
+shape = SubResource("RectangleShape2D_xqc1x")
 
 [node name="Sprite2D" type="Sprite2D" parent="Metal"]
+texture = ExtResource("11_1ik10")

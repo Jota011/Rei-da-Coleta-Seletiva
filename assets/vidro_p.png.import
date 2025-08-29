@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://carr8ptj3qd4q"
-path="res://.godot/imported/lixos2.png-3ba870629298c73a1d6308e77d2acbf6.ctex"
+uid="uid://yr2utpjhwmdr"
+path="res://.godot/imported/vidro_p.png-e5a0cda22271dde56aa7fc7fd2d869a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/lixos2.png"
-dest_files=["res://.godot/imported/lixos2.png-3ba870629298c73a1d6308e77d2acbf6.ctex"]
+source_file="res://assets/vidro_p.png"
+dest_files=["res://.godot/imported/vidro_p.png-e5a0cda22271dde56aa7fc7fd2d869a9.ctex"]
 
 [params]
 
