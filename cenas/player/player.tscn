@@ -10,8 +10,6 @@ radius = 41.0
 height = 116.0
 
 [node name="Player" type="StaticBody2D"]
-light_mask = 2
-visibility_layer = 2
 position = Vector2(297, 758)
 physics_material_override = SubResource("PhysicsMaterial_w152q")
 script = ExtResource("1_w152q")

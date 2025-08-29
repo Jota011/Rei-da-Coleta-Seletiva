@@ -1,11 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://1sxsfwtuwo5y"]
+[gd_scene load_steps=17 format=3 uid="uid://1sxsfwtuwo5y"]
 
 [ext_resource type="Script" uid="uid://d0gajpi55c6s7" path="res://script/lixeiras.gd" id="1_8ah6c"]
 [ext_resource type="Texture2D" uid="uid://rs5hu8b2qegm" path="res://assets/papel.png" id="2_m0oas"]
+[ext_resource type="Script" uid="uid://kqrxaoafqd8m" path="res://script/lixeiras_diferentes/lixeira_papel.gd" id="2_q5kx1"]
 [ext_resource type="Texture2D" uid="uid://edc1g0dkypk" path="res://assets/plastico.png" id="2_veynq"]
 [ext_resource type="Texture2D" uid="uid://ck1lfp155thn0" path="res://assets/organico.png" id="3_mye6s"]
+[ext_resource type="Script" uid="uid://r8juxqhhr7xj" path="res://script/lixeiras_diferentes/lixeira_plastico.gd" id="4_6oonn"]
 [ext_resource type="Texture2D" uid="uid://b4f6nvh75s480" path="res://assets/vidro.png" id="4_m0oas"]
 [ext_resource type="Texture2D" uid="uid://oauvkmeivwly" path="res://assets/metal.png" id="5_36wdc"]
+[ext_resource type="Script" uid="uid://dqdx4qtcuvbu5" path="res://script/lixeiras_diferentes/lixeira_organico.gd" id="6_fa02t"]
+[ext_resource type="Script" uid="uid://cpul0qt07cjmy" path="res://script/lixeiras_diferentes/lixeira_vidro.gd" id="8_noq44"]
+[ext_resource type="Script" uid="uid://dajly6e81s3jp" path="res://script/lixeiras_diferentes/lixeira_metal.gd" id="10_2vef3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hlb1n"]
 size = Vector2(48, 75)
@@ -25,8 +30,9 @@ size = Vector2(46, 75)
 [node name="Lixeiras" type="Node2D"]
 script = ExtResource("1_8ah6c")
 
-[node name="Lixeira_Papel" type="Area2D" parent="."]
-position = Vector2(353, 10)
+[node name="Lixeira_Papel" type="Area2D" parent="." groups=["bin_type"]]
+position = Vector2(348, 11)
+script = ExtResource("2_q5kx1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lixeira_Papel"]
 position = Vector2(1, -0.5)
@@ -36,8 +42,9 @@ shape = SubResource("RectangleShape2D_hlb1n")
 scale = Vector2(0.165, 0.165)
 texture = ExtResource("2_m0oas")
 
-[node name="Lixeira_Plastico" type="Area2D" parent="."]
-position = Vector2(257, 11)
+[node name="Lixeira_Plastico" type="Area2D" parent="." groups=["bin_type"]]
+position = Vector2(183, 11)
+script = ExtResource("4_6oonn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lixeira_Plastico"]
 position = Vector2(1, 7.62939e-06)
@@ -48,8 +55,9 @@ shape = SubResource("RectangleShape2D_rk6x7")
 scale = Vector2(0.165, 0.165)
 texture = ExtResource("2_veynq")
 
-[node name="Lixeira_Organico" type="Area2D" parent="."]
-position = Vector2(435, 63)
+[node name="Lixeira_Organico" type="Area2D" parent="." groups=["bin_type"]]
+position = Vector2(267, 12)
+script = ExtResource("6_fa02t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lixeira_Organico"]
 position = Vector2(1, 0)
@@ -59,8 +67,9 @@ shape = SubResource("RectangleShape2D_86f83")
 scale = Vector2(0.165, 0.165)
 texture = ExtResource("3_mye6s")
 
-[node name="Lixeira_Vidro" type="Area2D" parent="."]
-position = Vector2(355, 107)
+[node name="Lixeira_Vidro" type="Area2D" parent="." groups=["bin_type"]]
+position = Vector2(431, 11)
+script = ExtResource("8_noq44")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lixeira_Vidro"]
 position = Vector2(0.5, 0.5)
@@ -70,8 +79,9 @@ shape = SubResource("RectangleShape2D_nvi4a")
 scale = Vector2(0.165, 0.165)
 texture = ExtResource("4_m0oas")
 
-[node name="Lixeira_Metal" type="Area2D" parent="."]
-position = Vector2(254, 104)
+[node name="Lixeira_Metal" type="Area2D" parent="." groups=["bin_type"]]
+position = Vector2(107, 11)
+script = ExtResource("10_2vef3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lixeira_Metal"]
 position = Vector2(1, -0.5)
