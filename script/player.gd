@@ -1,8 +1,9 @@
+
 extends StaticBody2D
 
 
 var projectile_scene: PackedScene = preload("res://cenas/player/Projetil/projetil.tscn")
-
+var trash_types: Array = ["papel", "plastico", "metal", "vidro", "organico"]
 
 @export var player: bool
 @export var velocidade_player: int = 500
@@ -35,9 +36,15 @@ func limite_mapa() -> void:
 
 
 func shoot():
-	var projectile = projectile_scene.instantiate()   # cria o projetil -- Futuramente trocarei essa bomba
-	get_parent().add_child(projectile)                # adiciona na main/cena
-	projectile.position = position                    # projetil nasce no player
+	var projectile = projectile_scene.instantiate()
+	get_parent().add_child(projectile)
+	projectile.position = position
+
+	var random_trash_type = trash_types[randi() % trash_types.size()]
+	projectile.trash_type = random_trash_type
+
 	can_shoot = false
 	await get_tree().create_timer(shoot_cooldown).timeout
 	can_shoot = true
+
+
