@@ -1,0 +1,163 @@
+[gd_scene load_steps=16 format=3 uid="uid://dojmhi4ygqnrc"]
+
+[ext_resource type="Script" uid="uid://dna3a4ham448x" path="res://Main.gd" id="1_03owx"]
+[ext_resource type="PackedScene" uid="uid://d2al7er4r4kae" path="res://Player/Player.tscn" id="1_glv2v"]
+[ext_resource type="PackedScene" uid="uid://dgc4gurtehasv" path="res://Bins/Bin.tscn" id="1_r0du0"]
+[ext_resource type="PackedScene" uid="uid://btu2p6usgw8mt" path="res://PauseMenu.tscn" id="2_5vvyt"]
+[ext_resource type="PackedScene" uid="uid://cley2434hl5cp" path="res://GameOverScreen.tscn" id="2_20pc6"]
+[ext_resource type="PackedScene" uid="uid://ufg88wpitkjm" path="res://Trash/Trash.tscn" id="3_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://bav5mbcw3cs6b" path="res://assets/campo_fundo_2450x2450.jpg" id="4_c2ibq"]
+[ext_resource type="Texture2D" uid="uid://d126mfmiprw0a" path="res://assets/metal.png" id="6_c2ibq"]
+[ext_resource type="Texture2D" uid="uid://dke8htq18ri8c" path="res://assets/organico.png" id="7_j4qnp"]
+[ext_resource type="Texture2D" uid="uid://ch46bfqjcbic" path="res://assets/papel.png" id="8_fpfj3"]
+[ext_resource type="Texture2D" uid="uid://dxcb21703rjkp" path="res://assets/plastico.png" id="9_sc1dx"]
+[ext_resource type="Texture2D" uid="uid://dqfwx5rek24ja" path="res://assets/vidro.png" id="10_kjvhd"]
+[ext_resource type="FontFile" uid="uid://ch2q8fckwhep" path="res://fonts/PressStart2P-Regular.ttf" id="10_wkp8b"]
+[ext_resource type="Texture2D" uid="uid://n2ukeym2x7tu" path="res://assets/heart48.png" id="13_c6i3y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4qnp"]
+size = Vector2(1121, 20)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_03owx")
+game_over_scene = ExtResource("2_20pc6")
+pause_menu_scene = ExtResource("2_5vvyt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(422, 453)
+scale = Vector2(1.0528846, 1.0128205)
+texture = ExtResource("4_c2ibq")
+
+[node name="BinMetal" parent="." groups=["lixeiras"] instance=ExtResource("1_r0du0")]
+position = Vector2(120, 97)
+scale = Vector2(1.5, 1)
+accepts_type = "metal"
+
+[node name="Sprite2D" parent="BinMetal" index="0"]
+scale = Vector2(0.14, 0.19)
+texture = ExtResource("6_c2ibq")
+
+[node name="BinOrganico" parent="." groups=["lixeiras"] instance=ExtResource("1_r0du0")]
+position = Vector2(268, 97)
+scale = Vector2(1.5, 1)
+accepts_type = "organico"
+
+[node name="Sprite2D" parent="BinOrganico" index="0"]
+scale = Vector2(0.14, 0.19)
+texture = ExtResource("7_j4qnp")
+
+[node name="BinPapel" parent="." groups=["lixeiras"] instance=ExtResource("1_r0du0")]
+position = Vector2(426, 98)
+scale = Vector2(1.5, 1)
+accepts_type = "papel"
+
+[node name="Sprite2D" parent="BinPapel" index="0"]
+scale = Vector2(0.14, 0.19)
+texture = ExtResource("8_fpfj3")
+
+[node name="CollisionShape2D" parent="BinPapel" index="1"]
+position = Vector2(0.333344, 0)
+
+[node name="BinPlastico" parent="." groups=["lixeiras"] instance=ExtResource("1_r0du0")]
+position = Vector2(571, 96)
+scale = Vector2(1.5, 1)
+accepts_type = "plastico"
+
+[node name="Sprite2D" parent="BinPlastico" index="0"]
+scale = Vector2(0.14, 0.19)
+texture = ExtResource("9_sc1dx")
+
+[node name="BinVidro" parent="." groups=["lixeiras"] instance=ExtResource("1_r0du0")]
+position = Vector2(732, 96)
+scale = Vector2(1.5, 1)
+accepts_type = "vidro"
+
+[node name="Sprite2D" parent="BinVidro" index="0"]
+scale = Vector2(0.14, 0.19)
+texture = ExtResource("10_kjvhd")
+
+[node name="Player" parent="." instance=ExtResource("1_glv2v")]
+position = Vector2(386, 674)
+trash_scene = ExtResource("3_cm0pq")
+
+[node name="MissDetector" type="Area2D" parent="."]
+position = Vector2(-60, 4)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MissDetector"]
+position = Vector2(456, -20)
+shape = SubResource("RectangleShape2D_j4qnp")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -37.0
+offset_top = 846.0
+offset_right = 863.0
+offset_bottom = 866.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("10_wkp8b")
+theme_override_font_sizes/font_size = 20
+text = "SCORE: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[node name="TimerLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(900, 0)
+offset_left = -37.0
+offset_top = 800.0
+offset_right = 863.0
+offset_bottom = 832.0
+theme_override_fonts/font = ExtResource("10_wkp8b")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LifeIcon1" type="TextureRect" parent="."]
+offset_left = 309.0
+offset_top = 882.0
+offset_right = 357.0
+offset_bottom = 930.0
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(24, 24)
+texture = ExtResource("13_c6i3y")
+
+[node name="LifeIcon2" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 389.0
+offset_top = 882.0
+offset_right = 437.0
+offset_bottom = 930.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(24, 24)
+size_flags_horizontal = 4
+texture = ExtResource("13_c6i3y")
+
+[node name="LifeIcon3" type="TextureRect" parent="."]
+offset_left = 469.0
+offset_top = 882.0
+offset_right = 517.0
+offset_bottom = 930.0
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(24, 24)
+texture = ExtResource("13_c6i3y")
+
+[connection signal="body_entered" from="MissDetector" to="." method="_on_miss_detector_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="game_over"]
+
+[editable path="BinMetal"]
+[editable path="BinOrganico"]
+[editable path="BinPapel"]
+[editable path="BinPlastico"]
+[editable path="BinVidro"]

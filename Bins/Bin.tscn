@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgc4gurtehasv"]
+
+[ext_resource type="Script" uid="uid://c5accf6oxetkc" path="res://Bins/Bin.gd" id="1_05812"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shwkt"]
+size = Vector2(40, 88)
+
+[node name="Bin" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_05812")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_shwkt")

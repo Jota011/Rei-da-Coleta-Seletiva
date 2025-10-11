@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2al7er4r4kae"]
+
+[ext_resource type="Script" uid="uid://bl67gwiqjxrrf" path="res://Player/Player.gd" id="1_q3lat"]
+[ext_resource type="Texture2D" uid="uid://b20je8eveecsk" path="res://Player/player.png" id="2_q3lat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q3lat"]
+size = Vector2(102, 164)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 0
+script = ExtResource("1_q3lat")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.19, 0.19)
+texture = ExtResource("2_q3lat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7, 0)
+shape = SubResource("RectangleShape2D_q3lat")
+
+[node name="PontoDeLancamento" type="Marker2D" parent="."]
+position = Vector2(38, -50)
+scale = Vector2(0.4, 0.4)
+
+[node name="LixoNaMaoSprite" type="Sprite2D" parent="."]
+position = Vector2(38, -50)
+scale = Vector2(0.4, 0.4)
