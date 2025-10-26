@@ -1,18 +1,17 @@
+ # Trash.gd
 extends CharacterBody2D
 
-# Velocidade com que o lixo sobe (em pixels por segundo)
 @export var speed = 1000
-
 var trash_type: String
 
-func _physics_process(delta):
-	# Define a velocidade vertical para ser constante e para cima
-	# (negativa no eixo Y significa para cima)
+func _physics_process(_delta):
 	velocity.y = -speed
-
-	# Move o lixo
 	move_and_slide()
 
+	# Se sair da tela, é removido
+	if global_position.y < -50:
+		queue_free()
+
 func set_trash_properties(type: String, texture: Texture):
-	self.trash_type = type
+	trash_type = type
 	$Sprite2D.texture = texture

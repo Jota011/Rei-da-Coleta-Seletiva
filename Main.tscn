@@ -1,11 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://dojmhi4ygqnrc"]
+[gd_scene load_steps=20 format=3 uid="uid://dojmhi4ygqnrc"]
 
 [ext_resource type="Script" uid="uid://dna3a4ham448x" path="res://Main.gd" id="1_03owx"]
 [ext_resource type="PackedScene" uid="uid://d2al7er4r4kae" path="res://Player/Player.tscn" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://dgc4gurtehasv" path="res://Bins/Bin.tscn" id="1_r0du0"]
 [ext_resource type="PackedScene" uid="uid://btu2p6usgw8mt" path="res://PauseMenu.tscn" id="2_5vvyt"]
 [ext_resource type="PackedScene" uid="uid://cley2434hl5cp" path="res://GameOverScreen.tscn" id="2_20pc6"]
-[ext_resource type="PackedScene" uid="uid://ufg88wpitkjm" path="res://Trash/Trash.tscn" id="3_cm0pq"]
 [ext_resource type="Texture2D" uid="uid://bav5mbcw3cs6b" path="res://assets/campo_fundo_2450x2450.jpg" id="4_c2ibq"]
 [ext_resource type="Texture2D" uid="uid://d126mfmiprw0a" path="res://assets/metal.png" id="6_c2ibq"]
 [ext_resource type="Texture2D" uid="uid://dke8htq18ri8c" path="res://assets/organico.png" id="7_j4qnp"]
@@ -14,9 +13,16 @@
 [ext_resource type="Texture2D" uid="uid://dqfwx5rek24ja" path="res://assets/vidro.png" id="10_kjvhd"]
 [ext_resource type="FontFile" uid="uid://ch2q8fckwhep" path="res://fonts/PressStart2P-Regular.ttf" id="10_wkp8b"]
 [ext_resource type="Texture2D" uid="uid://n2ukeym2x7tu" path="res://assets/heart48.png" id="13_c6i3y"]
+[ext_resource type="Script" uid="uid://dhebldi4nxyb1" path="res://obstaclespawner.gd" id="15_j4qnp"]
+[ext_resource type="PackedScene" uid="uid://co152im2uf31v" path="res://obstaculo.tscn" id="16_fpfj3"]
+[ext_resource type="PackedScene" uid="uid://dreq1rom74ba1" path="res://Trash/TrashCollectible.tscn" id="17_kjvhd"]
+[ext_resource type="Script" uid="uid://ia1p8t5b563w" path="res://area_spawn_lixo/trashSpawner.gd" id="17_sc1dx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4qnp"]
 size = Vector2(1121, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fpfj3"]
+size = Vector2(851, 20)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_03owx")
@@ -78,7 +84,6 @@ texture = ExtResource("10_kjvhd")
 
 [node name="Player" parent="." instance=ExtResource("1_glv2v")]
 position = Vector2(386, 674)
-trash_scene = ExtResource("3_cm0pq")
 
 [node name="MissDetector" type="Area2D" parent="."]
 position = Vector2(-60, 4)
@@ -151,6 +156,23 @@ offset_bottom = 930.0
 scale = Vector2(0.9, 0.9)
 pivot_offset = Vector2(24, 24)
 texture = ExtResource("13_c6i3y")
+
+[node name="ObstacleSpawner" type="Node2D" parent="."]
+script = ExtResource("15_j4qnp")
+obstacle_scene = ExtResource("16_fpfj3")
+
+[node name="Timer" type="Timer" parent="ObstacleSpawner"]
+
+[node name="TrashSpawner" type="Node2D" parent="."]
+script = ExtResource("17_sc1dx")
+trash_scene = ExtResource("17_kjvhd")
+
+[node name="area_spawn_lixo" type="Area2D" parent="TrashSpawner"]
+position = Vector2(0, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrashSpawner/area_spawn_lixo"]
+position = Vector2(425.5, 635)
+shape = SubResource("RectangleShape2D_fpfj3")
 
 [connection signal="body_entered" from="MissDetector" to="." method="_on_miss_detector_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

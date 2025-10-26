@@ -22,7 +22,7 @@ func _ready():
 	for lixeira in lixeiras:
 		lixeira.trash_collided.connect(_on_trash_collided)
 	
-	$MissDetector.body_entered.connect(_on_miss_detector_body_entered)
+	#$MissDetector.body_entered.connect(_on_miss_detector_body_entered)
 	
 	randomize_bin_positions()
 	update_score_display()
