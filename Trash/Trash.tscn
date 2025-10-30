@@ -9,7 +9,7 @@ size = Vector2(40, 40)
 [node name="Trash" type="CharacterBody2D"]
 scale = Vector2(0.4, 0.4)
 collision_layer = 2
-collision_mask = 4
+collision_mask = 8
 script = ExtResource("1_qnrs2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

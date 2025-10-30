@@ -58,7 +58,7 @@ text = "Sair do Jogo"
 stream = ExtResource("3_q775a")
 volume_db = -7.0
 pitch_scale = 4.0
-attenuation = 1.8025047
+attenuation = 1.8025
 
 [node name="sfx_hover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_qg8xq")

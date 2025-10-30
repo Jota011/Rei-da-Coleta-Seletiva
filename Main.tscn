@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dojmhi4ygqnrc"]
+[gd_scene load_steps=19 format=3 uid="uid://dojmhi4ygqnrc"]
 
 [ext_resource type="Script" uid="uid://dna3a4ham448x" path="res://Main.gd" id="1_03owx"]
 [ext_resource type="PackedScene" uid="uid://d2al7er4r4kae" path="res://Player/Player.tscn" id="1_glv2v"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://n2ukeym2x7tu" path="res://assets/heart48.png" id="13_c6i3y"]
 [ext_resource type="Script" uid="uid://edo3t6icj61" path="res://TrashSpawner.gd" id="13_j4qnp"]
 [ext_resource type="AudioStream" uid="uid://bx2fi52koc156" path="res://SFX/coracao_vida.mp3" id="16_fpfj3"]
+[ext_resource type="PackedScene" uid="uid://dtp8bn0pti8ax" path="res://Obstacle/papagaio_spawner.tscn" id="17_kjvhd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4qnp"]
 size = Vector2(1121, 20)
@@ -27,7 +28,7 @@ pause_menu_scene = ExtResource("2_5vvyt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(422, 453)
-scale = Vector2(1.0528846, 1.0128205)
+scale = Vector2(1.05288, 1.01282)
 texture = ExtResource("4_c2ibq")
 
 [node name="BinMetal" parent="." groups=["lixeiras"] instance=ExtResource("1_r0du0")]
@@ -162,6 +163,8 @@ texture = ExtResource("13_c6i3y")
 stream = ExtResource("16_fpfj3")
 volume_db = 6.433
 pitch_scale = 1.6
+
+[node name="PapagaioSpawner" parent="." instance=ExtResource("17_kjvhd")]
 
 [connection signal="body_entered" from="MissDetector" to="." method="_on_miss_detector_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

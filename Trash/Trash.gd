@@ -88,12 +88,16 @@ func set_launched_trash(type: String, texture: Texture, sprite_scale: Vector2):
 	# CRÍTICO: Configuração de colisão para lixo lançado
 	# Layer 2 = onde o lixo "existe"
 	# Mask 0 = lixo não detecta nada (as lixeiras é que detectam o lixo)
-	set_collision_layer_value(1, false)  # Desliga Layer 1
-	set_collision_layer_value(2, true)   # Liga Layer 2
-	set_collision_mask_value(1, false)   # Desliga todas as masks
-	
-	collision_layer = 2  # Binário: 10 = Layer 2
-	collision_mask = 0   # Não colide com nada
+	# Lixo lançado (projétil)
+# Layer 2 = lixo
+# Mask 4 = detecta papagaio
+	set_collision_layer_value(1, false)
+	set_collision_layer_value(2, true)
+	set_collision_layer_value(4, false)
+
+	collision_layer = 2
+	collision_mask = 4  # agora o lixo detecta papagaios
+
 	
 	print("Collision Layer (lancado): ", collision_layer)
 	print("Collision Mask (lancado): ", collision_mask)

@@ -131,3 +131,7 @@ func shoot():
 
 func prepare_next_trash():
 	pass
+
+func on_hit_by_papagaio():
+	print("Jogador atingido pelo papagaio!")
+	get_tree().current_scene.lose_life()
