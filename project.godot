@@ -23,11 +23,6 @@ window/size/initial_position_type=0
 window/size/borderless=true
 window/stretch/mode="canvas_items"
 
-[global_group]
-
-projeteis=""
-obstacle=""
-
 [importer_defaults]
 
 animation_library={

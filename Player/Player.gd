@@ -1,67 +1,133 @@
-# Player.gd
 extends CharacterBody2D
 
-# --- Variáveis Exportadas ---
-@export var speed = 900
-@export var trash_projectile_scene: PackedScene  # Cena do projetil (Trash.tscn)
+signal trash_collected
+signal trash_launched
 
-# --- Referências de Nós ---
+@onready var sfx_passos: AudioStreamPlayer = $sfx_passos
+
+@export var speed = 900
+@export var trash_scene: PackedScene
+@export var collect_distance: float = 100.0
+
 @onready var lixo_na_mao_sprite: Sprite2D = $LixoNaMaoSprite
 @onready var ponto_de_lancamento: Marker2D = $PontoDeLancamento
 
-# --- Dados ---
-var trash_types = {
-	"metal": preload("res://Trash/metal.png"),
-	"organico": preload("res://Trash/organico.png"),
-	"papel": preload("res://Trash/papel.png"),
-	"plastico": preload("res://Trash/plastico.png"),
-	"vidro": preload("res://Trash/vidro.png")
+var trash_textures = {
+	"metal": preload("res://assets/metal_p.png"),
+	"organico": preload("res://assets/organico_p.png"),
+	"papel": preload("res://assets/papel_p.png"),
+	"plastico": preload("res://assets/plastico_p.png"),
+	"vidro": preload("res://assets/vidro_p.png")
 }
 
+var current_trash_type: String = ""
+var current_trash_texture: Texture = null
 var has_trash = false
-var current_trash_type: String
-var current_trash_texture: Texture
 
-# --- Ready ---
+const LIXO_MAO_SCALE = Vector2(0.25, 0.25)
+const LIXO_MAO_POSITION = Vector2(0, -50)
+const LIXO_ATIRADO_SCALE = Vector2(0.4, 0.4)
+
 func _ready():
-	lixo_na_mao_sprite.texture = null
+	print("")
+	print("PLAYER INICIALIZADO")
+	print("Posicao X: ", global_position.x)
+	print("Posicao Y: ", global_position.y)
+	print("Distancia de coleta: ", collect_distance)
+	
+	ponto_de_lancamento.position = Vector2(0, -50)
+	lixo_na_mao_sprite.visible = false
+	
+	if not trash_scene:
+		trash_scene = load("res://Trash/Trash.tscn")
+		print("Trash scene carregada automaticamente")
 
-# --- Movimento ---
 func _physics_process(_delta):
 	var direction = Input.get_axis("move_left", "move_right")
+	
 	velocity.x = direction * speed
 	move_and_slide()
-
+	
+	# Lógica de som de passos
+	if direction != 0:
+		# Toca se não estiver tocando
+		if not sfx_passos.is_playing():
+			sfx_passos.play()
+	else:
+		# Para se estiver tocando e o jogador parou
+		if sfx_passos.is_playing():
+			sfx_passos.stop()
+	
 	position.x = clamp(position.x, 44, 789)
+	
+	if not has_trash:
+		check_for_trash()
 
-# --- Input ---
 func _unhandled_input(event):
-	if event.is_action_pressed("ui_accept"):
-		if has_trash:
-			shoot()
+	if event.is_action_pressed("ui_accept") and has_trash:
+		shoot()
 
-# --- Coleta ---
-func collect_trash(type: String, texture: Texture):
-	if has_trash:
-		return  # Já tem lixo na mão
-	has_trash = true
-	current_trash_type = type
-	current_trash_texture = texture
-	lixo_na_mao_sprite.texture = texture
-	print("♻️ Lixo coletado:", type)
+func check_for_trash():
+	var trash_group = get_tree().get_nodes_in_group("collectable_trash")
+	
+	if trash_group.size() > 0:
+		print("")
+		print("Checando ", trash_group.size(), " lixo(s) na cena...")
+	
+	for trash in trash_group:
+		if trash and is_instance_valid(trash):
+			var distance = global_position.distance_to(trash.global_position)
+			
+			if distance < collect_distance + 50:
+				print("Distancia do lixo: ", distance, " (limite: ", collect_distance, ")")
+			
+			if distance < collect_distance:
+				collect_trash(trash)
+				break
 
-# --- Arremesso ---
+func collect_trash(trash):
+	if trash.is_collectable:
+		print("")
+		print("COLETANDO LIXO!")
+		
+		current_trash_type = trash.trash_type
+		current_trash_texture = trash_textures[current_trash_type]
+		
+		lixo_na_mao_sprite.texture = current_trash_texture
+		lixo_na_mao_sprite.visible = true
+		lixo_na_mao_sprite.scale = LIXO_MAO_SCALE
+		lixo_na_mao_sprite.position = LIXO_MAO_POSITION
+		lixo_na_mao_sprite.z_index = 10
+		
+		has_trash = true
+		trash.queue_free()
+		
+		trash_collected.emit()
+		
+		print("Tipo coletado: ", current_trash_type)
+		print("Pressione ESPACO para lancar!")
+
 func shoot():
-	if not trash_projectile_scene:
-		push_error("❌ Cena do lixo projetil não atribuída!")
+	if not trash_scene or not has_trash:
 		return
-
-	var projectile = trash_projectile_scene.instantiate()
-	projectile.set_trash_properties(current_trash_type, current_trash_texture)
-	projectile.global_position = ponto_de_lancamento.global_position
-	get_parent().add_child(projectile)
-
-	print("🚀 Arremessou:", current_trash_type)
-
+	
+	print("")
+	print("LANCANDO LIXO!")
+	print("Tipo sendo lancado: ", current_trash_type)
+	
+	var trash_instance = trash_scene.instantiate()
+	trash_instance.global_position = ponto_de_lancamento.global_position
+	trash_instance.set_trash_properties(current_trash_type, current_trash_texture, LIXO_ATIRADO_SCALE)
+	
+	get_parent().add_child(trash_instance)
+	
 	lixo_na_mao_sprite.texture = null
+	lixo_na_mao_sprite.visible = false
 	has_trash = false
+	
+	trash_launched.emit()
+	
+	print("Lixo lancado com sucesso!")
+
+func prepare_next_trash():
+	pass

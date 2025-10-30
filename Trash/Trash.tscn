@@ -1,13 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://ufg88wpitkjm"]
+[gd_scene load_steps=4 format=3 uid="uid://ufg88wpitkjm"]
 
 [ext_resource type="Script" uid="uid://c2y5of5xxnq67" path="res://Trash/Trash.gd" id="1_qnrs2"]
+[ext_resource type="AudioStream" uid="uid://rrnepqfj3ft3" path="res://SFX/mais_1_ponto.mp3" id="2_sqrs1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qnrs2"]
 size = Vector2(40, 40)
 
-[node name="Trash" type="CharacterBody2D" groups=["projeteis"]]
+[node name="Trash" type="CharacterBody2D"]
 scale = Vector2(0.4, 0.4)
 collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_qnrs2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -15,3 +17,8 @@ script = ExtResource("1_qnrs2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_qnrs2")
+
+[node name="sfx_coleta" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_sqrs1")
+volume_db = -9.0
+pitch_scale = 4.0
