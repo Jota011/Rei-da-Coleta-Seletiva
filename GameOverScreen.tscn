@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cley2434hl5cp"]
+[gd_scene load_steps=5 format=3 uid="uid://cley2434hl5cp"]
 
 [ext_resource type="Script" uid="uid://b6ihhels3b1fe" path="res://GameOverScreen.gd" id="1_gk5la"]
 [ext_resource type="FontFile" uid="uid://ch2q8fckwhep" path="res://fonts/PressStart2P-Regular.ttf" id="2_51cef"]
+[ext_resource type="AudioStream" uid="uid://rrnepqfj3ft3" path="res://SFX/mais_1_ponto.mp3" id="3_51cef"]
+[ext_resource type="AudioStream" uid="uid://bx2fi52koc156" path="res://SFX/coracao_vida.mp3" id="4_hlmrq"]
 
 [node name="GamerOverScreen" type="CanvasLayer"]
 process_mode = 3
@@ -52,3 +54,13 @@ text = "Jogar Novamente"
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_51cef")
 text = "Sair do Jogo"
+
+[node name="sfx_botao" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_51cef")
+volume_db = -25.0
+pitch_scale = 4.0
+
+[node name="sfx_hover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_hlmrq")
+volume_db = -7.0
+pitch_scale = 4.0

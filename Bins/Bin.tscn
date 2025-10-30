@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgc4gurtehasv"]
+[gd_scene load_steps=5 format=3 uid="uid://dgc4gurtehasv"]
 
 [ext_resource type="Script" uid="uid://c5accf6oxetkc" path="res://Bins/Bin.gd" id="1_05812"]
+[ext_resource type="AudioStream" uid="uid://rrnepqfj3ft3" path="res://SFX/mais_1_ponto.mp3" id="2_hali4"]
+[ext_resource type="AudioStream" uid="uid://kw0ka54ppx3m" path="res://SFX/menos_1_ponto.mp3" id="3_vyqmo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shwkt"]
 size = Vector2(40, 88)
@@ -14,3 +16,13 @@ script = ExtResource("1_05812")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_shwkt")
+
+[node name="sfx_maisponto" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_hali4")
+volume_db = -9.0
+pitch_scale = 1.65
+
+[node name="sfx_menosponto" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vyqmo")
+volume_db = -9.0
+pitch_scale = 1.45

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dojmhi4ygqnrc"]
+[gd_scene load_steps=17 format=3 uid="uid://dojmhi4ygqnrc"]
 
 [ext_resource type="Script" uid="uid://dna3a4ham448x" path="res://Main.gd" id="1_03owx"]
 [ext_resource type="PackedScene" uid="uid://d2al7er4r4kae" path="res://Player/Player.tscn" id="1_glv2v"]
@@ -15,7 +15,6 @@
 [ext_resource type="FontFile" uid="uid://ch2q8fckwhep" path="res://fonts/PressStart2P-Regular.ttf" id="10_wkp8b"]
 [ext_resource type="Texture2D" uid="uid://n2ukeym2x7tu" path="res://assets/heart48.png" id="13_c6i3y"]
 [ext_resource type="Script" uid="uid://edo3t6icj61" path="res://TrashSpawner.gd" id="13_j4qnp"]
-[ext_resource type="AudioStream" uid="uid://bx2fi52koc156" path="res://SFX/coracao_vida.mp3" id="16_fpfj3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4qnp"]
 size = Vector2(1121, 20)
@@ -158,14 +157,9 @@ scale = Vector2(0.9, 0.9)
 pivot_offset = Vector2(24, 24)
 texture = ExtResource("13_c6i3y")
 
-[node name="sfx_miss" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("16_fpfj3")
-volume_db = 6.433
-pitch_scale = 1.6
-
 [connection signal="body_entered" from="MissDetector" to="." method="_on_miss_detector_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 
 [editable path="BinMetal"]
 [editable path="BinOrganico"]

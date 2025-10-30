@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://btu2p6usgw8mt"]
+[gd_scene load_steps=5 format=3 uid="uid://btu2p6usgw8mt"]
 
 [ext_resource type="Script" uid="uid://d4h7k5rtntr4v" path="res://PauseMenu.gd" id="1_etnfi"]
 [ext_resource type="FontFile" uid="uid://ch2q8fckwhep" path="res://fonts/PressStart2P-Regular.ttf" id="1_nov15"]
+[ext_resource type="AudioStream" uid="uid://kw0ka54ppx3m" path="res://SFX/menos_1_ponto.mp3" id="3_q775a"]
+[ext_resource type="AudioStream" uid="uid://bx2fi52koc156" path="res://SFX/coracao_vida.mp3" id="4_qg8xq"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
@@ -51,3 +53,14 @@ text = "Reiniciar"
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_nov15")
 text = "Sair do Jogo"
+
+[node name="sfx_botao" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_q775a")
+volume_db = -7.0
+pitch_scale = 4.0
+attenuation = 1.8025047
+
+[node name="sfx_hover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_qg8xq")
+volume_db = -10.0
+pitch_scale = 14.0
