@@ -96,3 +96,10 @@ func game_over():
 
 func _on_timer_timeout():
 	game_over()
+
+func decrease_life(amount: int = 1):
+	lose_life()
+
+func decrease_score(amount: int = 1):
+	score -= amount
+	update_score_display()
