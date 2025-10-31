@@ -104,6 +104,6 @@ func set_launched_trash(type: String, texture: Texture, sprite_scale: Vector2):
 
 func set_trash_properties(type: String, texture: Texture, sprite_scale: Vector2):
 	set_launched_trash(type, texture, sprite_scale)
-
+	add_to_group("launched_trash")
 func get_trash_type() -> String:
 	return trash_type

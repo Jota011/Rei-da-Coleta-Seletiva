@@ -1,3 +1,4 @@
+#Main.gd
 extends Node2D
 
 @export var game_over_scene: PackedScene

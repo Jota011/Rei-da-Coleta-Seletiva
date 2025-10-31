@@ -57,7 +57,7 @@ text = "Sair"
 
 [node name="Sprite2D" type="Sprite2D" parent="ColorRect/VBoxContainer"]
 position = Vector2(345, 141)
-scale = Vector2(1.5004642, 1.5795828)
+scale = Vector2(1.50046, 1.57958)
 texture = ExtResource("3_iwfq2")
 
 [node name="sfx_botao" type="AudioStreamPlayer2D" parent="."]
