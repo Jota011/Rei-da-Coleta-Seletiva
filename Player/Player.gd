@@ -29,6 +29,7 @@ const LIXO_MAO_POSITION = Vector2(0, -50)
 const LIXO_ATIRADO_SCALE = Vector2(0.4, 0.4)
 
 func _ready():
+	add_to_group("player")
 	print("")
 	print("PLAYER INICIALIZADO")
 	print("Posicao X: ", global_position.x)
