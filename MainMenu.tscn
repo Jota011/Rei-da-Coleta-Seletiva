@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://chlypk1m2sget"]
+[gd_scene load_steps=6 format=3 uid="uid://chlypk1m2sget"]
 
 [ext_resource type="Script" uid="uid://vch3vmonqage" path="res://MainMenu.gd" id="1_eiy7p"]
 [ext_resource type="FontFile" uid="uid://ch2q8fckwhep" path="res://fonts/PressStart2P-Regular.ttf" id="2_h7a2f"]
+[ext_resource type="Texture2D" uid="uid://dumsckwjpoo7o" path="res://assets/ttl3_branco.png" id="3_iwfq2"]
 [ext_resource type="AudioStream" uid="uid://rrnepqfj3ft3" path="res://SFX/mais_1_ponto.mp3" id="3_qoqlk"]
 [ext_resource type="AudioStream" uid="uid://bx2fi52koc156" path="res://SFX/coracao_vida.mp3" id="4_iwfq2"]
 
@@ -53,6 +54,11 @@ text = "Iniciar Jogo"
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_h7a2f")
 text = "Sair"
+
+[node name="Sprite2D" type="Sprite2D" parent="ColorRect/VBoxContainer"]
+position = Vector2(345, 141)
+scale = Vector2(1.5004642, 1.5795828)
+texture = ExtResource("3_iwfq2")
 
 [node name="sfx_botao" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_qoqlk")
