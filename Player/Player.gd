@@ -1,96 +1,138 @@
-# Player.gd
 extends CharacterBody2D
 
-# --- Variáveis Exportadas (Ajustáveis no Inspetor) ---
+signal trash_collected
+signal trash_launched
+
+@onready var sfx_passos: AudioStreamPlayer = $sfx_passos
+
 @export var speed = 900
 @export var trash_scene: PackedScene
+@export var collect_distance: float = 100.0
 
-
-# --- Referências de Nós Filhos ---
-# Garante que temos uma referência ao sprite que mostra o lixo "em espera".
 @onready var lixo_na_mao_sprite: Sprite2D = $LixoNaMaoSprite
-# Garante que temos uma referência ao ponto exato de onde o lixo será lançado.
 @onready var ponto_de_lancamento: Marker2D = $PontoDeLancamento
 
-
-# --- Lógica do Jogo ---
-# Dicionário que armazena os tipos de lixo e suas respectivas imagens.
-var trash_types = {
-	"metal": preload("res://Trash/metal.png"),
-	"organico": preload("res://Trash/organico.png"),
-	"papel": preload("res://Trash/papel.png"),
-	"plastico": preload("res://Trash/plastico.png"),
-	"vidro": preload("res://Trash/vidro.png")
+var trash_textures = {
+	"metal": preload("res://assets/metal_p.png"),
+	"organico": preload("res://assets/organico_p.png"),
+	"papel": preload("res://assets/papel_p.png"),
+	"plastico": preload("res://assets/plastico_p.png"),
+	"vidro": preload("res://assets/vidro_p.png")
 }
-# Uma lista com as chaves do dicionário para facilitar o sorteio.
-var trash_keys = trash_types.keys()
 
-# Variáveis para guardar o estado do lixo que está "na mão".
-var current_trash_type: String
-var current_trash_texture: Texture
-var can_shoot = false # Controla se o jogador pode atirar
+var current_trash_type: String = ""
+var current_trash_texture: Texture = null
+var has_trash = false
 
+const LIXO_MAO_SCALE = Vector2(0.25, 0.25)
+const LIXO_MAO_POSITION = Vector2(0, -50)
+const LIXO_ATIRADO_SCALE = Vector2(0.4, 0.4)
 
-# Função chamada uma vez quando o nó entra na cena.
 func _ready():
-	# Prepara o primeiro lixo assim que o jogo começa.
-	prepare_next_trash()
-
-
-# Função chamada a cada frame de física. Ideal para movimento e física.
-func _physics_process(delta):
-	# 1. Pega o input das setas Esquerda (-1) e Direita (1).
-	var direction = Input.get_axis("move_left", "move_right")
-	velocity.x = direction * speed
+	add_to_group("player")
+	print("")
+	print("PLAYER INICIALIZADO")
+	print("Posicao X: ", global_position.x)
+	print("Posicao Y: ", global_position.y)
+	print("Distancia de coleta: ", collect_distance)
 	
-	# 2. Move o personagem.
-	move_and_slide()
-
-	# 3. Limita a posição do jogador às bordas da tela.
-	#    Usa os limites exatos que você definiu: 44 e 789.
-	position.x = clamp(position.x, 44, 789)
-
-
-# Função chamada sempre que há um input (tecla, mouse, etc.).
-func _unhandled_input(event):
-	# Verifica se a tecla pressionada foi a de "aceitar" (Espaço, por padrão).
-	if event.is_action_pressed("ui_accept"):
-		# Só permite o tiro se a variável can_shoot for verdadeira.
-		if can_shoot:
-			shoot()
-
-
-# Esta função é chamada pela cena 'Main' para preparar o próximo lixo.
-func prepare_next_trash():
-	# Sorteia um novo tipo de lixo aleatoriamente.
-	current_trash_type = trash_keys[randi() % trash_keys.size()]
-	current_trash_texture = trash_types[current_trash_type]
+	ponto_de_lancamento.position = Vector2(0, -50)
+	lixo_na_mao_sprite.visible = false
 	
-	# Atualiza a textura do sprite para mostrar qual lixo será o próximo.
-	lixo_na_mao_sprite.texture = current_trash_texture
-	can_shoot = true # Libera o próximo tiro!
-	print("Novo lixo preparado: ", current_trash_type)
-
-
-# Esta função lança o lixo que JÁ ESTAVA visível.
-func shoot():
-	# Verificação de segurança.
 	if not trash_scene:
-		print("ERRO: A cena do lixo (Trash Scene) não foi definida no Inspetor do Player!")
-		return
+		trash_scene = load("res://Trash/Trash.tscn")
+		print("Trash scene carregada automaticamente")
 
-	# Cria uma nova instância da cena do lixo.
-	var trash_instance = trash_scene.instantiate()
+func _physics_process(_delta):
+	var direction = Input.get_axis("move_left", "move_right")
 	
-	# Define as propriedades do lixo que será lançado (tipo e textura).
-	trash_instance.set_trash_properties(current_trash_type, current_trash_texture)
+	velocity.x = direction * speed
+	move_and_slide()
+	
+	# Lógica de som de passos
+	if direction != 0:
+		# Toca se não estiver tocando
+		if not sfx_passos.is_playing():
+			sfx_passos.play()
+	else:
+		# Para se estiver tocando e o jogador parou
+		if sfx_passos.is_playing():
+			sfx_passos.stop()
+	
+	position.x = clamp(position.x, 44, 789)
+	
+	if not has_trash:
+		check_for_trash()
 
-	# Posiciona o novo lixo exatamente na posição do nosso Marker2D.
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept") and has_trash:
+		shoot()
+
+func check_for_trash():
+	var trash_group = get_tree().get_nodes_in_group("collectable_trash")
+	
+	if trash_group.size() > 0:
+		print("")
+		print("Checando ", trash_group.size(), " lixo(s) na cena...")
+	
+	for trash in trash_group:
+		if trash and is_instance_valid(trash):
+			var distance = global_position.distance_to(trash.global_position)
+			
+			if distance < collect_distance + 50:
+				print("Distancia do lixo: ", distance, " (limite: ", collect_distance, ")")
+			
+			if distance < collect_distance:
+				collect_trash(trash)
+				break
+
+func collect_trash(trash):
+	if trash.is_collectable:
+		print("")
+		print("COLETANDO LIXO!")
+		
+		current_trash_type = trash.trash_type
+		current_trash_texture = trash_textures[current_trash_type]
+		
+		lixo_na_mao_sprite.texture = current_trash_texture
+		lixo_na_mao_sprite.visible = true
+		lixo_na_mao_sprite.scale = LIXO_MAO_SCALE
+		lixo_na_mao_sprite.position = LIXO_MAO_POSITION
+		lixo_na_mao_sprite.z_index = 10
+		
+		has_trash = true
+		trash.queue_free()
+		
+		trash_collected.emit()
+		
+		print("Tipo coletado: ", current_trash_type)
+		print("Pressione ESPACO para lancar!")
+
+func shoot():
+	if not trash_scene or not has_trash:
+		return
+	
+	print("")
+	print("LANCANDO LIXO!")
+	print("Tipo sendo lancado: ", current_trash_type)
+	
+	var trash_instance = trash_scene.instantiate()
 	trash_instance.global_position = ponto_de_lancamento.global_position
-
-	# Adiciona o lixo à cena principal para que ele exista no jogo.
+	trash_instance.set_trash_properties(current_trash_type, current_trash_texture, LIXO_ATIRADO_SCALE)
+	
 	get_parent().add_child(trash_instance)
 	
-	# Após atirar, esvazia a mão e impede novos tiros até o sinal de colisão.
 	lixo_na_mao_sprite.texture = null
-	can_shoot = false
+	lixo_na_mao_sprite.visible = false
+	has_trash = false
+	
+	trash_launched.emit()
+	
+	print("Lixo lancado com sucesso!")
+
+func prepare_next_trash():
+	pass
+
+func on_hit_by_papagaio():
+	print("Jogador atingido pelo papagaio!")
+	get_tree().current_scene.lose_life()

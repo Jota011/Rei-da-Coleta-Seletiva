@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://pxo261uw2al5"]
+
+[ext_resource type="Script" uid="uid://dlf76xnoqmham" path="res://Obstacle/papagaio.gd" id="1_e0csv"]
+[ext_resource type="Texture2D" uid="uid://bfrrh1iuy83qj" path="res://assets/Gemini_Generated_Image_7g2a8a7g2a8a7g2a.png" id="2_ytnxi"]
+[ext_resource type="Texture2D" uid="uid://c3jx2e8je5eiy" path="res://assets/Gemini_Generated_Image_p6yhpvp6yhpvp6yh.png" id="3_d2k0i"]
+[ext_resource type="Texture2D" uid="uid://c3yhd70likn8l" path="res://assets/Gemini_Generated_Image_ftmtzkftmtzkftmt.png" id="4_564ae"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ahjm0"]
+size = Vector2(62, 45)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fvvw4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ytnxi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_d2k0i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_564ae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_d2k0i")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 10.0
+}]
+
+[node name="Papagaio" type="CharacterBody2D"]
+light_mask = 4
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_e0csv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 4
+position = Vector2(-1, 1.5)
+shape = SubResource("RectangleShape2D_ahjm0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.180328, 0.156966)
+sprite_frames = SubResource("SpriteFrames_fvvw4")
+animation = &"fly"
+frame = 2
+frame_progress = 0.825439
+
+[node name="sfx_papagaio" type="AudioStreamPlayer2D" parent="."]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtp8bn0pti8ax"]
+
+[ext_resource type="Script" uid="uid://bfe4gnk5dgl2a" path="res://Obstacle/papagaio_spawner.gd" id="1_mjxg4"]
+[ext_resource type="PackedScene" uid="uid://pxo261uw2al5" path="res://Obstacle/papagaio.tscn" id="2_kf8li"]
+
+[node name="PapagaioSpawner" type="Node2D"]
+script = ExtResource("1_mjxg4")
+papagaio_scene = ExtResource("2_kf8li")
+
+[node name="Timer" type="Timer" parent="."]
